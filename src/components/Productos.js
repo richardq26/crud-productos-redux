@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { obtenerProductosAction } from "../actions/productoActions";
 
 export const Productos = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Consultar la api
+
+    const cargarProductos = () => dispatch(obtenerProductosAction());
+    cargarProductos();
+  }, []);
   return (
     <>
       <h2 className="text-center my-5">Listado de productos</h2>
@@ -12,9 +21,7 @@ export const Productos = () => {
             <td scope="col">Acciones</td>
           </tr>
         </thead>
-        <tbody>
-
-        </tbody>
+        <tbody></tbody>
       </table>
     </>
   );

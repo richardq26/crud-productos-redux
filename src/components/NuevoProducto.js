@@ -1,14 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
+// useSelector es el hook de react-redux para ver el state
 import { useForm } from "../hooks/useForm";
 // Actions de REDUX
 import { crearNuevoProductoAction } from "../actions/productoActions";
 
-export const NuevoProducto = () => {
+export const NuevoProducto = ({history}) => {
 
   // Utilizando useDispatch y me devuelve una función 
   const dispatch = useDispatch();
   // Se usa para llamar las funciones en el action
+
+  // Acceder al state del store
+  const cargando = useSelector(state => state.productos.loading);
+  const error = useSelector( state => state.productos.error);
+
   // Mandamos llamar el action de productoAction
   const agregarProducto = (producto)=>dispatch(crearNuevoProductoAction(producto));
 
@@ -23,7 +29,11 @@ export const NuevoProducto = () => {
       return;
     }
     // Crear el nuevo producto
+    // dispatch(crearNuevoProductoAction({nombre, precio}));
     agregarProducto({nombre, precio});
+
+    // Redireccionar
+    history.push('/');
   }
 
   return (
@@ -64,6 +74,8 @@ export const NuevoProducto = () => {
                 Agregar
               </button>
             </form>
+            { cargando ? <p>Cargando</p> : null}
+
           </div>
         </div>
       </div>
